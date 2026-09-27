@@ -1,0 +1,193 @@
+:root {
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --bg: #f7f8fb;
+  --surface: #ffffff;
+
+  --text: #0b1020;
+  --text-muted: #79839a;
+
+  --border: #e7e9f0;
+  --border-hover: #d8dbe6;
+
+  --brand: #4f46e5;
+
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  --shadow-sm:
+    0 1px 3px rgba(11, 16, 32, 0.06), 0 1px 2px rgba(11, 16, 32, 0.04);
+  --shadow-lg:
+    0 20px 40px -14px rgba(11, 16, 32, 0.18),
+    0 8px 16px -8px rgba(11, 16, 32, 0.08);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t: 240ms var(--ease);
+
+  --gutter: 24px;
+}
+
+/* ---------- BASE ---------- */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  margin: 0;
+}
+
+/* ---------- PAGE + HEADING ---------- */
+.page {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: clamp(32px, 5vw, 56px) var(--gutter) clamp(48px, 6vw, 72px);
+}
+
+.page__title {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.032em;
+  margin-bottom: clamp(24px, 3vw, 34px);
+}
+
+/* Short gradient accent under the heading */
+.page__title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 54px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #4f46e5, #a855f7);
+}
+
+/* ---------- PRODUCT GRID ---------- */
+#products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+/* ---------- PRODUCT CARD ---------- */
+#products > div {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--t) var(--ease-out),
+    box-shadow var(--t),
+    border-color var(--t);
+}
+
+#products > div:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Name — top of card */
+#products > div > h1:nth-of-type(1) {
+  order: 1;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  transition: color var(--t);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#products > div:hover > h1:nth-of-type(1) {
+  color: var(--brand);
+}
+
+/* Description — middle */
+#products > div > h1:nth-of-type(3) {
+  order: 2;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Price — pinned to the bottom of the card */
+#products > div > h1:nth-of-type(2) {
+  order: 3;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+/* Currency symbol, added without touching the JS */
+#products > div > h1:nth-of-type(2)::before {
+  content: "$";
+  margin-right: 1px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 720px) {
+  :root {
+    --gutter: 18px;
+  }
+
+  #products {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+  }
+
+  #products > div {
+    padding: 15px;
+  }
+
+  #products > div > h1:nth-of-type(1) {
+    font-size: 0.9375rem;
+  }
+
+  #products > div > h1:nth-of-type(3) {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  #products > div > h1:nth-of-type(2) {
+    font-size: 1.125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
